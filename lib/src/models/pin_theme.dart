@@ -64,6 +64,10 @@ class PinTheme {
   //this adds box shadow to inactive pin code field. Default is none.
   final List<BoxShadow>? inActiveBoxShadows;
 
+  final Color textActiveColor;
+  final Color textSelectedColor;
+  final Color textInactiveColor;
+
   const PinTheme.defaults({
     this.borderRadius = BorderRadius.zero,
     this.fieldHeight = 50,
@@ -86,6 +90,9 @@ class PinTheme {
     this.errorBorderWidth = 2,
     this.activeBoxShadows,
     this.inActiveBoxShadows,
+    this.textActiveColor = Colors.green,
+    this.textSelectedColor = Colors.blue,
+    this.textInactiveColor = Colors.red,
   });
 
   factory PinTheme({
@@ -110,6 +117,9 @@ class PinTheme {
     EdgeInsetsGeometry? fieldOuterPadding,
     List<BoxShadow>? activeBoxShadow,
     List<BoxShadow>? inActiveBoxShadow,
+    Color? textActiveColor,
+    Color? textSelectedColor,
+    Color? textInactiveColor,
   }) {
     final defaultValues = PinTheme.defaults();
     return PinTheme.defaults(
@@ -137,6 +147,9 @@ class PinTheme {
       errorBorderWidth: errorBorderWidth ?? defaultValues.errorBorderWidth,
       disabledBorderWidth:
           disabledBorderWidth ?? defaultValues.disabledBorderWidth,
+        textActiveColor: textActiveColor ?? defaultValues.textActiveColor,
+      textInactiveColor: textInactiveColor ?? defaultValues.textInactiveColor,
+      textSelectedColor: textSelectedColor ?? defaultValues.textSelectedColor,
     );
   }
 }
