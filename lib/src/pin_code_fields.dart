@@ -529,6 +529,29 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
     super.dispose();
   }
 
+  Color _getTextColorFromIndex(int index) {
+    if (!widget.enabled) {
+      return _pinTheme.disabledColor;
+    }
+
+    if (((_selectedIndex == index) ||
+        (_selectedIndex == index + 1 && index + 1 == widget.length)) &&
+        _focusNode!.hasFocus) {
+
+      return _pinTheme.textSelectedColor;
+
+    } else if (_selectedIndex > index) {
+
+      Color relevantActiveColor = _pinTheme.textActiveColor;
+      if (isInErrorMode) relevantActiveColor = _pinTheme.errorBorderColor;
+      return relevantActiveColor;
+    }
+
+    Color relevantInActiveColor = _pinTheme.textInactiveColor;
+    if (isInErrorMode) relevantInActiveColor = _pinTheme.errorBorderColor;
+    return relevantInActiveColor;
+  }
+
   // selects the right color for the field
   Color _getColorFromIndex(int index) {
     if (!widget.enabled) {
@@ -608,19 +631,21 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
         widget.obscureText && _inputList[index].isNotEmpty && showObscured
             ? widget.obscuringCharacter
             : _inputList[index];
+    final color = _getTextColorFromIndex(index);
+    print("Index ${index} ----- Color ${color}");
     return widget.textGradient != null
         ? Gradiented(
             gradient: widget.textGradient!,
             child: Text(
               text,
               key: ValueKey(_inputList[index]),
-              style: _textStyle.copyWith(color: Colors.white),
+              style: _textStyle.copyWith(color: color),
             ),
           )
         : Text(
             text,
             key: ValueKey(_inputList[index]),
-            style: _textStyle,
+            style: _textStyle.copyWith(color: color),
           );
   }
 
